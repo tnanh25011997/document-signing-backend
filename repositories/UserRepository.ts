@@ -1,5 +1,5 @@
 import { UserInterface } from "../models/interface/UserInterface";
-import UserModel from "../models/UserModel";
+import User from "../models/User";
 import { BaseRepository } from "./BaseRepository";
 
 export class UserRepo extends BaseRepository<UserInterface> {
@@ -7,7 +7,7 @@ export class UserRepo extends BaseRepository<UserInterface> {
 
     private constructor() {
         super();
-        this.model = UserModel;
+        this.model = User;
     }
 
     public static getInstance(): UserRepo {
