@@ -1,0 +1,14 @@
+
+[-] Request: POST /api/v1/auth/login headers[Authorization=-;] at Thu Sep 30 2021 23:08:31 GMT+0700 IP: ::1
+[-] Request Body:
+{
+	"email": "a@gmail.com",
+	"password": "123456"
+}
+[-] Response Body:
+{
+	"success": true,
+	"message": "OK",
+	"data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzMwMTgxMTEsImV4cCI6MTY2NDU1NDExMX0.dUvXZatErCIAJ1wfpomxYCaEWoWwFOOQdWpfa7lz8I0"
+}
+[-] Response: 200 111.189 ms 
