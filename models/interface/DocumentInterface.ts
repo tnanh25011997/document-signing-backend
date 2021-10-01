@@ -5,7 +5,7 @@ export interface DocumentInterface extends mongoose.Document {
     url: string;
     user_id: string;
     status: number;
-    signing_method_id: string;
+    signature_type_id: string;
     is_require_signature: boolean;
     is_signed: boolean;
     created_at: Date;

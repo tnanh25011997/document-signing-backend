@@ -10,7 +10,7 @@ const DocumentSchema = new mongoose.Schema(
             required: [true, databaseValidate("missing", "name", "Document")],
         },
         url: {
-            type: Number,
+            type: String,
             required: [true, databaseValidate("missing", "url", "Document")],
         },
         user_id: {
@@ -24,11 +24,11 @@ const DocumentSchema = new mongoose.Schema(
             type: Number,
             required: [true, databaseValidate("missing", "status", "Document")],
         },
-        signing_method_id: {
+        signature_type_id: {
             type: ObjectId,
             required: [
                 true,
-                databaseValidate("missing", "signing_method_id", "Document"),
+                databaseValidate("missing", "signature_type_id", "Document"),
             ],
         },
         is_require_signature: {
@@ -40,10 +40,7 @@ const DocumentSchema = new mongoose.Schema(
         },
         is_signed: {
             type: Boolean,
-            required: [
-                true,
-                databaseValidate("missing", "is_signed", "Document"),
-            ],
+            default: false,
         },
     },
     {
