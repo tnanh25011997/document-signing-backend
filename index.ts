@@ -24,6 +24,7 @@ app.use(injector);
 app.use(cors(corsOptions));
 morganBody(app, logs_config);
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/", rootRoute);
 app.use(handleError);

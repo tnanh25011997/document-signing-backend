@@ -1,3 +1,4 @@
+import keys from "../../config/env/keys";
 import { UserRepo } from "../../repositories/UserRepository";
 
 var jwt = require("jsonwebtoken");
@@ -16,14 +17,14 @@ export const login = async (req, res, next) => {
         const check = await comparePasswordString(password, user.password);
         if (!check) return res.error("Wrong Password");
         const tokenResult = getAccessToken(user);
-        return res.success(tokenResult, "OK");
+        return res.success(tokenResult, "Successfully");
     } catch (error) {
         res.error(error.name, error.message, error.statusCode);
     }
 };
 
 export function getAccessToken(user) {
-    const token = jwt.sign({ pk: user.email?.S }, "searchalljwt", {
+    const token = jwt.sign({ _id: user._id }, keys.jwtSecret, {
         expiresIn: expiresIn,
     });
     return token;
