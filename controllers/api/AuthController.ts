@@ -1,11 +1,9 @@
-import keys from "../../config/env/keys";
 import { UserRepo } from "../../repositories/UserRepository";
+import {
+    comparePasswordString,
+    getAccessToken,
+} from "../../services/AuthService";
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
-
-const expireTime = 365;
-const expiresIn = `${expireTime}d`;
 const userRepo = UserRepo.getInstance();
 
 export const login = async (req, res, next) => {
@@ -21,19 +19,4 @@ export const login = async (req, res, next) => {
     } catch (error) {
         res.error(error.name, error.message, error.statusCode);
     }
-};
-
-export function getAccessToken(user) {
-    const token = jwt.sign({ _id: user._id }, keys.jwtSecret, {
-        expiresIn: expiresIn,
-    });
-    return token;
-}
-
-export const comparePasswordString = (passwordAttempt, password) => {
-    return new Promise((resolve, reject) => {
-        bcrypt.compare(passwordAttempt, password, (err, isMatch) =>
-            err ? reject(err) : resolve(isMatch)
-        );
-    });
 };
