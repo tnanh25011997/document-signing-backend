@@ -46,3 +46,23 @@ export const createDocument = async (req: any, res: any, next: any) => {
         res.error(error.name, error.message, error.statusCode);
     }
 };
+
+export const getDetailDocument = async (req: any, res: any, next: any) => {
+    try {
+        const id = req.params.id;
+        const documentResult = await DocumentService._.getDetailDocument(id);
+        res.success(documentResult);
+    } catch (error) {
+        res.error(error.name, error.message, error.statusCode);
+    }
+};
+
+export const signDocument = async (req: any, res: any, next: any) => {
+    try {
+        const id = req.params.id;
+        const documentResult = await DocumentService._.signDocument(id);
+        res.success(documentResult);
+    } catch (error) {
+        res.error(error.name, error.message, error.statusCode);
+    }
+};
