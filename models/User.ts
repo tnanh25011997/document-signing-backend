@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { E_VERIFY_TYPE } from "../base/variable";
 import { databaseValidate } from "../utils/databaseValidate";
 import { UserInterface } from "./interface/UserInterface";
 const paginate = require("./plugins/paginate");
@@ -7,16 +6,11 @@ const aggregatePaginate = require("./plugins/aggregatePaginate");
 
 const UserSchema = new mongoose.Schema(
     {
-        user_name: {
-            type: String,
-            index: true,
-            unique: true,
-            required: [true, databaseValidate("missing", "user_name", "User")],
-        },
         email: {
             type: String,
+            required: [true, databaseValidate("missing", "email", "User")],
         },
-        phone: {
+        phone_number: {
             type: String,
             required: [true, databaseValidate("missing", "phone", "User")],
         },
@@ -24,10 +18,17 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: [databaseValidate("missing", "password", "User")],
         },
+        full_name: {
+            type: String,
+            required: [databaseValidate("missing", "full_name", "User")],
+        },
     },
     {
         versionKey: false,
-        timestamps: true,
+        timestamps: {
+            createdAt: "created_at",
+            updatedAt: "updated_at",
+        },
     }
 );
 
