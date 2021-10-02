@@ -22,7 +22,7 @@ const DocumentSchema = new mongoose.Schema(
         },
         status: {
             type: Number,
-            required: [true, databaseValidate("missing", "status", "Document")],
+            default: 1,
         },
         signature_type_id: {
             type: ObjectId,
@@ -33,10 +33,7 @@ const DocumentSchema = new mongoose.Schema(
         },
         is_require_signature: {
             type: Boolean,
-            required: [
-                true,
-                databaseValidate("missing", "is_require_signature", "Document"),
-            ],
+            default: true,
         },
         is_signed: {
             type: Boolean,

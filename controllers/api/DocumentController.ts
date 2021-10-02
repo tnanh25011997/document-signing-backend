@@ -1,6 +1,9 @@
-import { DocumentRepository } from "../../repositories/DocumentRepository";
 import DocumentService from "../../services/DocumentService";
+import { sendMailService } from "../../services/MailService";
+import SignerService from "../../services/SignerService";
 import { CreateDocumentRequest } from "../handleRequests/Document";
+import { CreateSignerRequest } from "../handleRequests/Signer";
+import * as variables from "../../base/variable";
 
 export const createDocument = async (req: any, res: any, next: any) => {
     try {
@@ -11,6 +14,10 @@ export const createDocument = async (req: any, res: any, next: any) => {
             status,
             signature_type_id,
             is_require_signature,
+            email,
+            phone_number,
+            full_name,
+            role_id,
         } = req.body;
         const document: CreateDocumentRequest = {
             name,
@@ -20,8 +27,21 @@ export const createDocument = async (req: any, res: any, next: any) => {
             signature_type_id,
             is_require_signature,
         };
-        const banner = await DocumentService._.createDocument(document);
-        res.success(banner);
+        const documentResult = await DocumentService._.createDocument(document);
+        const signer: CreateSignerRequest = {
+            email,
+            phone_number,
+            full_name,
+            document_id: documentResult._id,
+            role_id,
+        };
+        const signerResult = await SignerService._.createSigner(signer);
+
+        sendMailService(
+            signerResult?.email,
+            variables.DETAIL_DOCUMENT_URL + documentResult._id
+        );
+        res.success(documentResult);
     } catch (error) {
         res.error(error.name, error.message, error.statusCode);
     }
