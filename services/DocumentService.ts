@@ -16,5 +16,15 @@ class DocumentService {
         const newInstance = await documentRepository.create(request);
         return newInstance;
     }
+    async getDetailDocument(id: string) {
+        const document = await documentRepository.getDocumentWithSigner(id);
+        return document;
+    }
+    async signDocument(id: string) {
+        const document = await documentRepository.update(id, {
+            is_signed: true,
+        });
+        return document;
+    }
 }
 export default DocumentService;

@@ -1,3 +1,7 @@
+import responseCode from "../base/responseCode";
+import { DocumentRepository } from "../repositories/DocumentRepository";
+const ObjectId = require("mongoose").Types.ObjectId;
+
 const { body, validationResult } = require("express-validator");
 
 export const createDocumentRule = [
@@ -17,4 +21,33 @@ export const createDocumentValidate = (req, res, next) => {
     if (hasError) {
         res.error("VALIDATION_ERROR", error.array()[0], 422);
     } else next();
+};
+
+export const findDocumentMiddleware = async (req, res, next) => {
+    try {
+        const documentId = req.params.id;
+        if (!ObjectId.isValid(documentId)) {
+            res.error(
+                responseCode.NOT_FOUND.name,
+                "Invalid Id",
+                responseCode.NOT_FOUND.code
+            );
+            return;
+        }
+        let document: any = await DocumentRepository.getInstance().findOne({
+            _id: documentId,
+        });
+        if (!document) {
+            res.error(
+                responseCode.NOT_FOUND.name,
+                "Document not found",
+                responseCode.NOT_FOUND.code
+            );
+            return;
+        }
+        next();
+    } catch (error) {
+        res.error(error.name, error.message, error.statusCode);
+        return;
+    }
 };

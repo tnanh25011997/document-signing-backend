@@ -1,6 +1,8 @@
 import { DocumentInterface } from "../models/interface/DocumentInterface";
 import Document from "../models/Document";
 import { BaseRepository } from "./BaseRepository";
+import mongoose from "mongoose";
+export const ObjectId = mongoose.Types.ObjectId;
 
 export class DocumentRepository extends BaseRepository<DocumentInterface> {
     private static instance: DocumentRepository;
@@ -16,5 +18,38 @@ export class DocumentRepository extends BaseRepository<DocumentInterface> {
         }
 
         return DocumentRepository.instance;
+    }
+
+    async getDocumentWithSigner(id: string) {
+        const document = await this.model.aggregate([
+            {
+                $match: { _id: ObjectId(id) },
+            },
+            {
+                $lookup: {
+                    from: "signers",
+                    let: {
+                        document_id: "$_id",
+                    },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ["$document_id", "$$document_id"],
+                                },
+                            },
+                        },
+                    ],
+                    as: "signer",
+                },
+            },
+            {
+                $unwind: {
+                    path: "$signer",
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+        ]);
+        return document.length ? document[0] : null;
     }
 }
