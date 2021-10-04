@@ -1,0 +1,19 @@
+version: "3.6"
+
+services:
+    document_signing_develop:
+        image: document_signing_develop
+        container_name: document-signing-develop
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        ports:
+            - "7012:7012"
+        volumes:
+            - /root/document-signing-file/logs:/var/www/logs
+            - /root/document-signing-file/uploads/:/var/www/uploads/
+networks:
+    default:
+        external:
+            name: localhost
