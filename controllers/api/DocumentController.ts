@@ -60,7 +60,11 @@ export const getDetailDocument = async (req: any, res: any, next: any) => {
 export const signDocument = async (req: any, res: any, next: any) => {
     try {
         const id = req.params.id;
-        const documentResult = await DocumentService._.signDocument(id);
+        const is_signed = req.body.is_signed;
+        const documentResult = await DocumentService._.signDocument(
+            id,
+            is_signed
+        );
         res.success(documentResult);
     } catch (error) {
         res.error(error.name, error.message, error.statusCode);
