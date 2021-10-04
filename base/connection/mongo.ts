@@ -2,10 +2,7 @@ import mongoose from "mongoose";
 import keys from "../../config/env/keys";
 export const connectMongoDb = () => {
     const connect = () => {
-        const dbHost = process.env.DB_HOST || "localhost";
-        const dbPort = process.env.DB_PORT || 27017;
-        const dbName = process.env.DB_NAME || "document-signing";
-        const mongoUrl = `mongodb://${dbHost}:${dbPort}/${dbName}`;
+        const mongoUrl = keys.mongoDbUrl;
         // const DB_URL = keys.mongoDbUrl
         mongoose.Promise = global.Promise;
         mongoose.connect(
