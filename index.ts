@@ -29,7 +29,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/", rootRoute);
 app.use(handleError);
 
-const port = process.env.PORT || 7000;
+const port = process.env.PORT || 7012;
 app.listen(port, () => {
-    console.log(`* ### Start with port: ${process.env.PORT || 7000} *`);
+    console.log(`* ### Start with port: ${process.env.PORT || 7012} *`);
 });
