@@ -20,9 +20,9 @@ class DocumentService {
         const document = await documentRepository.getDocumentWithSigner(id);
         return document;
     }
-    async signDocument(id: string) {
+    async signDocument(id: string, is_signed: boolean) {
         const document = await documentRepository.update(id, {
-            is_signed: true,
+            is_signed,
         });
         return document;
     }
