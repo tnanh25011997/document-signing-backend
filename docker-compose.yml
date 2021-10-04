@@ -10,9 +10,9 @@ services:
         restart: unless-stopped
         ports:
             - "7012:7012"
-        # volumes:
-        #     - /root/logs:/var/www/logs
-        #     - /root/uploads/:/var/www/uploads/
+        volumes:
+            - /root/document-signing-file/logs:/var/www/logs
+            - /root/document-signing-file/uploads/:/var/www/uploads/
 networks:
     default:
         external:
